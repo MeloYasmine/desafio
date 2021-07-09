@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { ThemeProvider, createTheme, makeStyles } from '@material-ui/core';
+import Home from './Home';
+
+
+const useStayles = makeStyles({
+  root:{
+    background:'blue',
+    height: '100vh',
+  },
+});
 
 function App() {
+  const theme = createTheme({
+    palette:{
+      primary:{
+        main: '#607d8b',
+      },
+      secondary:{
+        main: '#78909c',
+      },
+    },
+  });
+
+  const classes = useStayles();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ThemeProvider theme={theme}>
+      <Home/>
+    </ThemeProvider>
+  )
 }
+
+
 
 export default App;
