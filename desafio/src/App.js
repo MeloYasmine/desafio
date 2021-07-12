@@ -2,7 +2,7 @@ import React from "react";
 import { ThemeProvider, createTheme, makeStyles } from "@material-ui/core";
 import Home from "./components/Home";
 import ApiManager from "./services/ApiManager";
-
+import SearchCoin from "./services/SearchCoin";
 
 const useStayles = makeStyles({
   root: {
@@ -26,9 +26,9 @@ function App() {
   const classes = useStayles();
 
   return (
-   
-      <ApiManager />
-    
+    <ThemeProvider theme={theme}>
+      <Home />
+    </ThemeProvider>
   );
 }
 

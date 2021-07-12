@@ -9,35 +9,40 @@ import {
   Box,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import ExitToApp from '@material-ui/icons/ExitToApp';
+import ExitToApp from "@material-ui/icons/ExitToApp";
 import BasicTable from "./BasicTable";
+import ApiManager from "../services/ApiManager";
+import NavBar from "./NavBar";
 
 
 
-
-const useStayles = makeStyles((theme) => ({
-  root: {
-    // background: theme.palette.primary.main,
-    height: "100vh",
-    // padding: theme.spacing(2),
-  },
-  appBar:{
-      //boxShadow: 'none',
+const useStyles = makeStyles((theme) => ({
+    appBar: {
+    //boxShadow: 'none',
   },
   icons: {
     //paddingRight: theme.spacing(5),
   },
   grow: {
-      flexGrow: 1,
+    flexGrow: 1,
   },
-  logo:{
+  logo: {
     height: 30,
-
   },
+  root: {
+    display: 'flex',
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  }
 }));
 
 function Home() {
-  const classes = useStayles();
+  const classes = useStyles();
 
   return (
     <div className={classes.root}>
@@ -52,21 +57,25 @@ function Home() {
             <MenuIcon />
           </IconButton>
           <img src="/images/logo.png" alt="logo" className={classes.logo} />
-          <Typography variant="h6" className={classes.title} >
+          <Typography variant="h6" className={classes.title}>
             Criptomoedas
           </Typography>
-          <div className={classes.grow}/>
-          <IconButton       
-            className={classes.icons}
-            color="inherit"         
-          >
-            <ExitToApp/>
+          <div className={classes.grow} />
+          <IconButton className={classes.icons} color="inherit">
+            <ExitToApp />
           </IconButton>
         </Toolbar>
       </AppBar>
 
+
+      
+
+
+
+
+
       <Box>
-    <BasicTable/>
+        <ApiManager />
       </Box>
     </div>
   );
