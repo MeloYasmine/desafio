@@ -6,9 +6,14 @@ import {
   IconButton,
   Typography,
   Button,
+  Box,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import ExitToApp from '@material-ui/icons/ExitToApp';
+import BasicTable from "./BasicTable";
+
+
+
 
 const useStayles = makeStyles((theme) => ({
   root: {
@@ -59,6 +64,10 @@ function Home() {
           </IconButton>
         </Toolbar>
       </AppBar>
+
+      <Box>
+    <BasicTable/>
+      </Box>
     </div>
   );
 }

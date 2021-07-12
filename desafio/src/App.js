@@ -1,23 +1,24 @@
-import React from 'react';
-import { ThemeProvider, createTheme, makeStyles } from '@material-ui/core';
-import Home from './Home';
+import React from "react";
+import { ThemeProvider, createTheme, makeStyles } from "@material-ui/core";
+import Home from "./components/Home";
+import ApiManager from "./services/ApiManager";
 
 
 const useStayles = makeStyles({
-  root:{
-    background:'blue',
-    height: '100vh',
+  root: {
+    background: "blue",
+    height: "100vh",
   },
 });
 
 function App() {
   const theme = createTheme({
-    palette:{
-      primary:{
-        main: '#607d8b',
+    palette: {
+      primary: {
+        main: "#607d8b",
       },
-      secondary:{
-        main: '#78909c',
+      secondary: {
+        main: "#78909c",
       },
     },
   });
@@ -25,12 +26,10 @@ function App() {
   const classes = useStayles();
 
   return (
-    <ThemeProvider theme={theme}>
-      <Home/>
-    </ThemeProvider>
-  )
+   
+      <ApiManager />
+    
+  );
 }
-
-
 
 export default App;
