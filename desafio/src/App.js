@@ -1,37 +1,27 @@
-import React from "react";
-import { ThemeProvider, createTheme, makeStyles } from "@material-ui/core";
-import Home from "./components/Home";
-import ApiManager from "./services/ApiManager";
-import SearchCoin from "./services/CoinDetail";
-import { Route, Switch, Redirect } from "react-router-dom";
-import DataCoin from "./components/DataCoin";
-
-const useStayles = makeStyles({
-  root: {
-    background: "blue",
-    height: "100vh",
-  },
-});
+import React from 'react';
+import { ThemeProvider, createTheme } from '@material-ui/core';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import Home from './components/Home';
+import SearchCoin from './services/CoinDetail';
+import DataCoin from './components/DataCoin';
 
 function App() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#607d8b",
+        main: '#607d8b',
       },
       secondary: {
-        main: "#78909c",
+        main: '#78909c',
       },
     },
   });
-
-  const classes = useStayles();
 
   return (
     <ThemeProvider theme={theme}>
       <Switch>
         <Route path="/" exact>
-          <Redirect to="/Home"/>
+          <Redirect to="/Home" />
         </Route>
         <Route path="/Home">
           <Home />
@@ -39,10 +29,7 @@ function App() {
         <Route path="/SearchCoin">
           <SearchCoin />
         </Route>
-        <Route path="/DataCoin" exact>
-          <DataCoin />
-        </Route>
-        <Route path="/DataCoin/:coinName">
+        <Route path="/DataCoin/:name" exact>
           <DataCoin />
         </Route>
       </Switch>

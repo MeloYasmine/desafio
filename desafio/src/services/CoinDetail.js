@@ -1,25 +1,24 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
 
- function SearchCoin() {
-
-  const [nameCoin, setNameCoin] = useState({ nameCoin: ''});
+function SearchCoin() {
+  const [nameCoin, setNameCoin] = useState({ nameCoin: '' });
   const [results, setResults] = useState({
-    Coin: "",
-    date: "",
-    amount: "",
-   rate: "",
+    Coin: '',
+    date: '',
+    amount: '',
+    rate: '',
   });
 
   const getResults = () => {
     axios
       .get(
-        "https://poloniex.com/public?command=returnTradeHistory&currencyPair=" + nameCoin
+        `https://poloniex.com/public?command=returnTradeHistory&currencyPair=, ${nameCoin}`,
       )
       .then((response) => {
-    var v = Object.entries(response.data);
-      // var value = Object.values(response.dat);
-        
+        const v = Object.entries(response.data);
+        // var value = Object.values(response.dat);
+
         setResults(v);
         console.log(results);
       });
@@ -37,15 +36,9 @@ import axios from "axios";
         onChange={(e) => {
           handlingCoin(e);
         }}
-        placeholder="Coin"
+        placeholder="text"
       />
-      <button onClick={getResults}>Search  </button>
-
-      <ul>
-        
-
-      </ul>
-    
+      <button type="button" onClick={getResults}>Search </button>
     </>
   );
 }
