@@ -2,7 +2,9 @@ import React from "react";
 import { ThemeProvider, createTheme, makeStyles } from "@material-ui/core";
 import Home from "./components/Home";
 import ApiManager from "./services/ApiManager";
-import SearchCoin from "./services/SearchCoin";
+import SearchCoin from "./services/CoinDetail";
+import { Route, Switch, Redirect } from "react-router-dom";
+import DataCoin from "./components/DataCoin";
 
 const useStayles = makeStyles({
   root: {
@@ -27,7 +29,23 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Home />
+      <Switch>
+        <Route path="/" exact>
+          <Redirect to="/Home"/>
+        </Route>
+        <Route path="/Home">
+          <Home />
+        </Route>
+        <Route path="/SearchCoin">
+          <SearchCoin />
+        </Route>
+        <Route path="/DataCoin" exact>
+          <DataCoin />
+        </Route>
+        <Route path="/DataCoin/:coinName">
+          <DataCoin />
+        </Route>
+      </Switch>
     </ThemeProvider>
   );
 }

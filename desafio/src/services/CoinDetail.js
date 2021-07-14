@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-export default function App() {
-  const [nameCoin, setNameCoin] = useState({ nameCoin: "" });
+ function SearchCoin() {
+
+  const [nameCoin, setNameCoin] = useState({ nameCoin: ''});
   const [results, setResults] = useState({
     Coin: "",
-    Id: "",
-    Last: "",
-    LowestAsk: "",
-    HighesBid: "",
-    PercentChange: "",
-    BaseVolume: "",
-    isFrozen: "",
+    date: "",
+    amount: "",
+   rate: "",
   });
 
   const getResults = () => {
@@ -22,8 +19,9 @@ export default function App() {
       .then((response) => {
     var v = Object.entries(response.data);
       // var value = Object.values(response.dat);
-        console.log(v);
+        
         setResults(v);
+        console.log(results);
       });
   };
 
@@ -41,15 +39,15 @@ export default function App() {
         }}
         placeholder="Coin"
       />
-      <button onClick={getResults}>Search</button>
+      <button onClick={getResults}>Search  </button>
 
       <ul>
-
-        <li>Amount: {results[1].amount}</li>
-        <li>Date: {results[1].date}</li>
-        <li>rate: {results[1].rate}</li>
+        
 
       </ul>
+    
     </>
   );
 }
+
+export default SearchCoin;

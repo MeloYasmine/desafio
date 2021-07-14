@@ -11,13 +11,14 @@ function ApiManager(props) {
     api
       .get("")
       .then((res) => {
-        console.log(Object.values(Object.entries(res.data)));
+        //console.log(Object.values(Object.entries(res.data)));
         setPosts(Object.values(Object.entries(res.data)));
       })
       .catch((err) => {
         console.log(err);
       });
-  });
+  },
+[]);
   return (
     <div>
       <BasicTable teste={posts}/>
