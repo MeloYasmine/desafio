@@ -1,43 +1,14 @@
-/* eslint-disable no-unreachable */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import Chart from 'chart.js/auto';
 import axios from 'axios';
 import { useParams } from 'react-router';
-
-const DataCoin = () => {
+/* eslint-disable react/react-in-jsx-scope */
+const Teste = () => {
   const chartRef = React.createRef();
   const [chart, setChart] = useState();
   const { name } = useParams();
   const [enteredLoanOrders, setLoanOrders] = useState([]);
-
-  const label = (data) => {
-    const labels = [];
-    data.map((order) => (
-      labels.push((order[1]).type)
-    ));
-    const unique = [...new Set(labels)];
-    console.log(unique);
-    console.log(labels);
-    return unique;
-  };
-  const datas = (data) => {
-    const labels = [];
-    const values = [];
-    data.map((order) => (
-      labels.push((order[1]).type)
-    ));
-    const unique = [...new Set(labels)];
-    // eslint-disable-next-line no-undef
-    unique.map((uni) => (
-      values.push(labels.filter((x) => x === uni).length)
-    ));
-    const quantidadeElementos = labels.filter((x) => x === unique).length;
-    // console.log(unique);
-    // eslint-disable-next-line no-undef
-    console.log(values);
-    return values;
-  };
   useEffect(() => {
     axios
       .get(
@@ -45,6 +16,7 @@ const DataCoin = () => {
       )
       .then((res) => {
         setLoanOrders(Object.entries(res.data));
+        console.log(enteredLoanOrders);
       })
       .catch((err) => {
         console.log(err);
@@ -54,11 +26,11 @@ const DataCoin = () => {
     const charts = new Chart(chartRef.current?.getContext('2d'), {
       type: 'bar',
       data: {
-        labels: label(enteredLoanOrders),
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
         datasets: [
           {
-            label: `Coin ${name}`,
-            data: datas(enteredLoanOrders),
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
@@ -89,12 +61,14 @@ const DataCoin = () => {
     });
     setChart(charts);
   }, []);
+
   return (
     <div>
-      {label(enteredLoanOrders)}
-      {datas(enteredLoanOrders)}
+      {enteredLoanOrders.map((order) => console.log((order[1]).type))}
+      ;
       <canvas id="chart-line" ref={chartRef} style={{ width: '100%' }} />
     </div>
+
   );
 };
-export default DataCoin;
+export default Teste;

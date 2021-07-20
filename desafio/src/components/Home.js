@@ -12,6 +12,7 @@ import {
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import { useHistory } from 'react-router-dom';
 import ApiManager from '../services/ApiManager';
 
 const useStyles = makeStyles((theme) => ({
@@ -94,15 +95,15 @@ const useStyles = makeStyles((theme) => ({
 
 function Home(props) {
   const classes = useStyles();
-
+  const history = useHistory();
   const [enteredTeste, setTeste] = useState('');
 
   const handleSearch = (event) => {
     console.log(event.target.value);
     console.log(event);
     if (event.key === 'Enter') {
-      console.log(`ok, enter${event.target.value}`);
       setTeste(event.target.value);
+      history.push(`/DataCoin/${enteredTeste}`);
     }
   };
 
