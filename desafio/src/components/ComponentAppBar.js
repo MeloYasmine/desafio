@@ -14,7 +14,6 @@ import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { useHistory } from 'react-router-dom';
 import ApiManager from '../services/ApiManager';
-import ComponentAppBar from './ComponentAppBar';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -94,16 +93,57 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Home(props) {
+function ComponentAppBar(props) {
   const classes = useStyles();
+  const history = useHistory();
+  const [enteredTeste, setTeste] = useState('');
+
+  const handleSearch = (event) => {
+    console.log(event.target.value);
+    console.log(event);
+    if (event.key === 'Enter') {
+      setTeste(event.target.value);
+      history.push(`/DataCoin/${enteredTeste}`);
+    }
+  };
+
   return (
-    <div className={classes.root}>
-      <ComponentAppBar />
-      <Box p={{ md: 7 }}>
-        <ApiManager />
-      </Box>
-    </div>
+    <AppBar className={classes.appBar}>
+      <Toolbar>
+        <IconButton
+          edge="start"
+          className={classes.menuButton}
+          color="inherit"
+          aria-label="menu"
+        />
+        <img src="/images/logo.png" alt="logo" className={classes.logo} />
+        <Typography variant="h6" className={classes.title}>
+          Criptomoedas
+        </Typography>
+
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
+            <SearchIcon />
+          </div>
+          <InputBase
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ 'aria-label': 'search' }}
+            onKeyPress={handleSearch}
+          />
+        </div>
+
+        <div className={classes.grow} />
+        <IconButton className={classes.icons} color="inherit">
+          <ExitToApp />
+        </IconButton>
+      </Toolbar>
+
+    </AppBar>
   );
 }
 
-export default Home;
+export default ComponentAppBar;

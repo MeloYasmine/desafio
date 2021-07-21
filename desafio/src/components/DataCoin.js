@@ -1,30 +1,38 @@
 /* eslint-disable no-unreachable */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import Chart from 'chart.js/auto';
 import axios from 'axios';
 import { useParams } from 'react-router';
+import { Box } from '@material-ui/core';
+import ComponentAppBar from './ComponentAppBar';
+import useData from '../hooks/useData';
 
 const DataCoin = () => {
   const chartRef = React.createRef();
-  const [chart, setChart] = useState();
   const { name } = useParams();
-  const [enteredLoanOrders, setLoanOrders] = useState([]);
+  const transactions = useData(name);
+  const [chart, setChart] = useState();
+  console.log(transactions);
 
-  const label = (data) => {
-    const labels = [];
-    data.map((order) => (
-      labels.push((order[1]).type)
+  const label = useCallback(() => {
+    const labels = transactions.map((order) => (
+      order[1].type
     ));
     const unique = [...new Set(labels)];
     console.log(unique);
-    console.log(labels);
     return unique;
-  };
-  const datas = (data) => {
+  }, [transactions]);
+
+  const datas = useCallback(() => {
     const labels = [];
     const values = [];
-    data.map((order) => (
+    transactions.map((order) => (
       labels.push((order[1]).type)
     ));
     const unique = [...new Set(labels)];
@@ -33,32 +41,19 @@ const DataCoin = () => {
       values.push(labels.filter((x) => x === uni).length)
     ));
     const quantidadeElementos = labels.filter((x) => x === unique).length;
-    // console.log(unique);
-    // eslint-disable-next-line no-undef
     console.log(values);
     return values;
-  };
+  }, [transactions]);
+
   useEffect(() => {
-    axios
-      .get(
-        `https://poloniex.com/public?command=returnTradeHistory&currencyPair=${name}`,
-      )
-      .then((res) => {
-        setLoanOrders(Object.entries(res.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-  useEffect(() => {
-    const charts = new Chart(chartRef.current?.getContext('2d'), {
+    const chartAux = new Chart(chartRef.current?.getContext('2d'), {
       type: 'bar',
       data: {
-        labels: label(enteredLoanOrders),
+        labels: [],
         datasets: [
           {
             label: `Coin ${name}`,
-            data: datas(enteredLoanOrders),
+            data: [],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
@@ -87,13 +82,23 @@ const DataCoin = () => {
         },
       },
     });
-    setChart(charts);
+
+    setChart(chartAux);
   }, []);
+
+  useEffect(() => {
+    if (chart) {
+      chart.data.labels = label();
+      chart.data.datasets[0].data = datas();
+      chart.update();
+    }
+  }, [label, datas, chart]);
+
   return (
     <div>
-      {label(enteredLoanOrders)}
-      {datas(enteredLoanOrders)}
-      <canvas id="chart-line" ref={chartRef} style={{ width: '100%' }} />
+      <Box p={{ md: 8 }}>
+        <canvas id="chart-line" ref={chartRef} p={{ md: 8 }} />
+      </Box>
     </div>
   );
 };
